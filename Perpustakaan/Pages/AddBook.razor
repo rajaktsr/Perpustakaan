@@ -1,0 +1,40 @@
+﻿@page "/addbook"
+@inject Perpustakaan.Services.BookService BookService
+@using Perpustakaan.Models
+@using Microsoft.AspNetCore.Components.Forms
+
+<h3>Add Book</h3>
+
+<EditForm Model="newBook" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Title:</label>
+        <InputText @bind-Value="newBook.Title" />
+    </div>
+    <div>
+        <label>Author:</label>
+        <InputText @bind-Value="newBook.Author" />
+    </div>
+    <div>
+        <label>ISBN:</label>
+        <InputText @bind-Value="newBook.ISBN" />
+    </div>
+    <div>
+        <label>Published Date:</label>
+        <InputDate @bind-Value="newBook.PublishedDate" />
+    </div>
+    <button type="submit">Add Book</button>
+</EditForm>
+
+@code {
+    private Book newBook = new Book();
+
+    private void HandleValidSubmit()
+    {
+        BookService.AddBook(newBook);
+        newBook = new Book(); // Reset form
+    }
+}
+
